@@ -15,4 +15,4 @@ The application uses structlog, but the test configuration does not route its ou
 
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
-**Cohort ledger:** [ ] Issue added to cohort ledger
+**Cohort ledger:** [x] Issue added to cohort ledger
