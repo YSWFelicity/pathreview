@@ -13,6 +13,6 @@ The application uses structlog, but the test configuration does not route its ou
 
 **Branch name:** fix/159-structlog-caplog
 
-**Setup confirmation:** [ ] App runs locally at localhost:5173
+**Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [ ] Issue added to cohort ledger
