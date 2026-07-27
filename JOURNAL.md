@@ -24,3 +24,17 @@ The application uses structlog, but the test configuration does not route its ou
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [x] Issue added to cohort ledger
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** Pending — add the GitHub commit URL after the reproduction commit is created and pushed.
+
+**Reproduction summary:**
+I reproduced the issue by running `.venv/bin/pytest tests/unit/test_batch_processor.py::TestBatchEmbeddingProcessor::test_empty_chunks_list_returns_empty -q`. The processor returned the expected empty list and printed the warning, but pytest captured it as stdout while `caplog.text` and `caplog.records` remained empty, causing the assertion at `tests/unit/test_batch_processor.py:42` to fail.
+
+**PLAN.md link:** https://github.com/YSWFelicity/pathreview/blob/fix/159-structlog-caplog/PLAN.md
+
+**Walkthrough video (recommended):** Not recorded yet.
+
+**Blockers or open questions:**
+I still need to confirm whether a test-only `structlog.stdlib` configuration or structlog's test capture utilities provide the best integration with the existing `caplog` assertions while avoiding global logging state leaking between tests.
