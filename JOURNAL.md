@@ -27,7 +27,7 @@ The application uses structlog, but the test configuration does not route its ou
 
 ## Week 8 — Reproduction & solution planning
 
-**Reproduction commit link:** Pending — add the GitHub commit URL after the reproduction commit is created and pushed.
+**Reproduction commit link:** https://github.com/YSWFelicity/pathreview/commit/210ed4de13892ed931cd276a6a784562624de0b9
 
 **Reproduction summary:**
 I reproduced the issue by running `.venv/bin/pytest tests/unit/test_batch_processor.py::TestBatchEmbeddingProcessor::test_empty_chunks_list_returns_empty -q`. The processor returned the expected empty list and printed the warning, but pytest captured it as stdout while `caplog.text` and `caplog.records` remained empty, causing the assertion at `tests/unit/test_batch_processor.py:42` to fail.
