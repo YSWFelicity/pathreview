@@ -37,4 +37,9 @@ I reproduced the issue by running `.venv/bin/pytest tests/unit/test_batch_proces
 **Walkthrough video (recommended):** Not recorded yet.
 
 **Blockers or open questions:**
-I still need to confirm whether a test-only `structlog.stdlib` configuration or structlog's test capture utilities provide the best integration with the existing `caplog` assertions while avoiding global logging state leaking between tests.
+No current blocker. I chose a test-only `structlog.stdlib` configuration because it integrates directly with the existing `caplog` assertion. The session fixture saves the previous structlog configuration, disables first-use caching, and restores the saved configuration during teardown to limit global state leakage.
+
+**Implementation commit:** https://github.com/YSWFelicity/pathreview/commit/cb2391e822c581a6bfe93abe666947727e9f9b46
+
+**Implementation progress:**
+Added shared test configuration in `tests/conftest.py` that routes structlog events through standard logging without changing production code. The original focused test now passes, all 11 batch processor unit tests pass, and the changed file passes ruff, black, and the repository's pre-commit mypy hook. The full unit suite reached 346 passing tests; its remaining failures cover existing unrelated issue fixtures and unavailable tokenizer network data, so they were not changed as part of Issue #159.
