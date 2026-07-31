@@ -48,3 +48,36 @@ Added shared test configuration in `tests/conftest.py` that routes structlog eve
 
 **Test coverage and results:**
 Added `tests/unit/test_logging_config.py` to verify that a structlog warning becomes a standard logging record, retains the `WARNING` level, and preserves its structured `issue` field. The new regression test and all 11 batch processor tests pass, and the new file passes ruff, black, and mypy. Running `make test-unit` collected 429 tests and produced 347 passes; the remaining 51 failures cover existing unrelated issue fixtures, while 31 setup errors come from unavailable tokenizer network data, so they were not changed as part of Issue #159.
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+I completed the PLAN.md implementation tasks: configured structlog to route test events through standard logging, preserved and restored the previous global configuration, and verified the original failing `caplog` assertion. I also added a focused regression test that checks the warning level, message capture, and preservation of structured fields.
+
+**Next steps:**
+Finish the contribution self-review, document pre-existing repository failures, submit the pull request, and respond to any CI or reviewer feedback.
+
+**Blockers:**
+No implementation blocker. The repository has pre-existing lint errors and unit-test failures, so I documented the before-and-after counts to show that this change introduces no new failures.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** Pending — no submitted PR for this branch was found on GitHub yet.
+
+**Branch:** `fix/159-structlog-caplog`
+
+**What you built:**
+I added a test-session structlog configuration that routes structured events through Python's standard logging system so pytest's `caplog` fixture can capture them. The fixture avoids first-use logger caching and restores the previous structlog configuration after the test session, leaving production logging behavior unchanged.
+
+**Tests added or updated:**
+Added `tests/unit/test_logging_config.py`, which verifies that a structlog warning is captured as a standard logging record with the correct `WARNING` level and its structured `issue` field intact. The original test in `tests/unit/test_batch_processor.py` also passes with the new configuration.
+
+**Self-review confirmation:** [x] make check passes  [x] make test-unit passes
+
+For this repository, "passes" means the contribution introduces no new failures, per the course guidance. The unmodified `main` snapshot and this branch both report 182 Ruff errors. Before the change, the unit suite reported 346 passed, 51 failed, and 31 errors; after adding the regression test, it reports 347 passed, 51 failed, and 31 errors.
+
+**Draft PR feedback received from:** none
