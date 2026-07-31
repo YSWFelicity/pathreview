@@ -66,7 +66,7 @@ No implementation blocker. The repository has pre-existing lint errors and unit-
 
 ### Check-in 2 (end of week)
 
-**PR link:** Pending — no submitted PR for this branch was found on GitHub yet.
+**PR link:** https://github.com/ascherj/pathreview/pull/474
 
 **Branch:** `fix/159-structlog-caplog`
 
