@@ -42,4 +42,9 @@ No current blocker. I chose a test-only `structlog.stdlib` configuration because
 **Implementation commit:** https://github.com/YSWFelicity/pathreview/commit/cb2391e822c581a6bfe93abe666947727e9f9b46
 
 **Implementation progress:**
-Added shared test configuration in `tests/conftest.py` that routes structlog events through standard logging without changing production code. The original focused test now passes, all 11 batch processor unit tests pass, and the changed file passes ruff, black, and the repository's pre-commit mypy hook. The full unit suite reached 346 passing tests; its remaining failures cover existing unrelated issue fixtures and unavailable tokenizer network data, so they were not changed as part of Issue #159.
+Added shared test configuration in `tests/conftest.py` that routes structlog events through standard logging without changing production code. The original focused test now passes, all 11 batch processor unit tests pass, and the changed file passes ruff, black, and the repository's pre-commit mypy hook.
+
+**Test commit:** https://github.com/YSWFelicity/pathreview/commit/d0df1fcec2d1b5edde872f58ea84008b5e7eb2e5
+
+**Test coverage and results:**
+Added `tests/unit/test_logging_config.py` to verify that a structlog warning becomes a standard logging record, retains the `WARNING` level, and preserves its structured `issue` field. The new regression test and all 11 batch processor tests pass, and the new file passes ruff, black, and mypy. Running `make test-unit` collected 429 tests and produced 347 passes; the remaining 51 failures cover existing unrelated issue fixtures, while 31 setup errors come from unavailable tokenizer network data, so they were not changed as part of Issue #159.
