@@ -81,3 +81,33 @@ Added `tests/unit/test_logging_config.py`, which verifies that a structlog warni
 For this repository, "passes" means the contribution introduces no new failures, per the course guidance. The unmodified `main` snapshot and this branch both report 182 Ruff errors. Before the change, the unit suite reported 346 passed, 51 failed, and 31 errors; after adding the regression test, it reports 347 passed, 51 failed, and 31 errors.
 
 **Draft PR feedback received from:** none
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No reviewer or maintainer comments have been posted on PR #474 yet. The pull request remains open and ready for review, so there was no requested code change to address this week.
+
+**How you responded:**
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+The hardest part was separating failures caused by my change from failures that already existed in the repository. `make check` reported 182 Ruff errors, and `make test-unit` reported dozens of failures and setup errors across unrelated modules, so a simple red-or-green result was not enough. I had to compare the same commands before and after my change, inspect the failing test names, and confirm that my focused tests passed. I also underestimated how strict the contribution workflow would be: my first implementation commit was blocked because the new pytest fixture was missing a generator return type annotation, even though Ruff, Black, and the focused test had passed.
+
+**What did you learn about working in a large codebase?**
+I learned that contributing to an existing codebase is as much about controlling scope and producing evidence as it is about writing the fix. I could not treat every failure as mine to solve, because changing unrelated parsers, services, and tests would have made Issue #159 harder to review. I needed to read `CONTRIBUTING.md`, follow the existing pytest structure, preserve global structlog state, and keep the production logging path unchanged. In my own projects I can change conventions as I go, but in someone else's repository I need to understand the current contracts and make the smallest change that fits them.
+
+**How did AI tools help — and where did they fall short?**
+AI assistance was most useful for navigating unfamiliar files, translating the failure output into a root-cause hypothesis, comparing possible structlog configurations, and turning the investigation into concrete reproduction and verification steps. It also helped me keep the journal, plan, test evidence, and pull request description consistent. However, AI output still required review against the repository's actual hooks and state. The initial fixture suggestion omitted the return type required by Mypy, and an early attempt to update a legacy test file triggered many unrelated type and lint problems. I had to run the real commands, read their output, narrow the change, and choose a dedicated regression test instead of accepting the first generated approach.
+
+**What would you do differently if you started over?**
+I would run `make check` and `make test-unit` immediately after setup and save the exact baseline before editing anything. That would make the before-and-after comparison easier and prevent uncertainty near the PR stage. I would also read the PR template and commit-message convention earlier, create the Wednesday check-in on time, and avoid letting the automatically changed `frontend/package-lock.json` remain in my working tree throughout the project. Technically, I would still choose a test-only stdlib logging configuration, but I would add the typed fixture and focused logging test together from the beginning.
+
+**What are you most proud of from this module?**
+I am most proud of building a clear chain of evidence from the original failure to the final fix. I reproduced the empty `caplog` state, documented the root cause, implemented a scoped configuration change, added a regression test for both the log record and its structured field, and showed that the repository's existing failure counts did not increase. Even though the pull request is still awaiting review, the work is understandable and verifiable by someone who did not participate in the debugging process.
